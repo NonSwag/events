@@ -11,6 +11,7 @@ public interface EventFactory {
     }
 
     // notify doesn't wait for all subscribers to complete and only informs them
+    // the executor is used to handle subscribers that don't define an executor themselves
     <E> CompletableFuture<E> notify(E event, Executor executor);
 
     // perform on the current thread
@@ -20,5 +21,6 @@ public interface EventFactory {
     }
 
     // fire calls all subscribers and waits for them to complete
+    // the executor is used to handle subscribers that don't define an executor themselves
     <E> CompletableFuture<E> fire(E event, Executor executor);
 }
