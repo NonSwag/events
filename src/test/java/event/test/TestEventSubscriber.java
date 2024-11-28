@@ -1,13 +1,12 @@
 package event.test;
 
-import event.Event;
 import event.EventSubscriber;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 import java.util.function.Consumer;
 
-public class TestEventSubscriber<E extends Event> implements EventSubscriber<E> {
+public class TestEventSubscriber<E> implements EventSubscriber<E> {
     private Consumer<E> handler;
     private Executor executor;
     private short priority = Short.MIN_VALUE;

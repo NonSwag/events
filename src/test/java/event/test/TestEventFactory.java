@@ -1,6 +1,5 @@
 package event.test;
 
-import event.Event;
 import event.EventFactory;
 
 import java.util.Comparator;
@@ -15,13 +14,13 @@ public class TestEventFactory implements EventFactory {
     }
 
     @Override
-    public <E extends Event> CompletableFuture<E> notify(E event) {
+    public <E> CompletableFuture<E> notify(E event) {
         return notify(event, Runnable::run);
     }
 
     @Override
     @SuppressWarnings("unchecked")
-    public <E extends Event> CompletableFuture<E> notify(E event, Executor executor) {
+    public <E> CompletableFuture<E> notify(E event, Executor executor) {
         return CompletableFuture.supplyAsync(() -> {
             provider.registry().subscriptions((Class<E>) event.getClass())
                     .sorted(Comparator.comparingInt(TestEventSubscriber::priority))
@@ -31,13 +30,13 @@ public class TestEventFactory implements EventFactory {
     }
 
     @Override
-    public <E extends Event> CompletableFuture<E> push(E event) {
+    public <E> CompletableFuture<E> push(E event) {
         return push(event, Runnable::run);
     }
 
     @Override
     @SuppressWarnings("unchecked")
-    public <E extends Event> CompletableFuture<E> push(E event, Executor executor) {
+    public <E> CompletableFuture<E> push(E event, Executor executor) {
         return CompletableFuture.supplyAsync(() -> {
             provider.registry().subscriptions((Class<E>) event.getClass())
                     .sorted(Comparator.comparingInt(TestEventSubscriber::priority))

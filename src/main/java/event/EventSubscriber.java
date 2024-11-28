@@ -3,7 +3,7 @@ package event;
 import java.util.concurrent.Executor;
 import java.util.function.Consumer;
 
-public interface EventSubscriber<E extends Event> {
+public interface EventSubscriber<E> {
     EventSubscriber<E> handle(Consumer<E> handler);
 
     EventSubscriber<E> handle(Consumer<E> handler, Executor executor);

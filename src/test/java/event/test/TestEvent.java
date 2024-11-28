@@ -1,9 +1,8 @@
 package event.test;
 
 import event.Cancellable;
-import event.Event;
 
-public class TestEvent implements Event, Cancellable {
+public class TestEvent implements Cancellable {
     private boolean cancelled;
 
     @Override
@@ -14,11 +13,6 @@ public class TestEvent implements Event, Cancellable {
     @Override
     public void setCancelled(boolean cancelled) {
         this.cancelled = cancelled;
-    }
-
-    @Override
-    public String getEventName() {
-        return "test";
     }
 
     @Override
