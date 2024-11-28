@@ -11,7 +11,7 @@ public class EventTest {
 
     @BeforeAll
     public static void setup() {
-        provider.handler().subscribe(TestEvent.class)
+        provider.handler.subscribe(TestEvent.class)
                 .handle(event -> {
                     System.out.println("++++");
                     System.out.println(event);
@@ -24,7 +24,7 @@ public class EventTest {
 
     @Test
     public void testCancelled() {
-        var event = provider.factory().push(new TestEvent()).join();
+        var event = provider.factory.fire(new TestEvent()).join();
         System.out.println(event);
         System.out.println(Thread.currentThread().getName());
         Assertions.assertTrue(event.isCancelled());

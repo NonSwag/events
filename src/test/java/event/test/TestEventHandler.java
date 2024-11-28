@@ -13,12 +13,12 @@ public class TestEventHandler implements EventHandler {
     @Override
     public <E> TestEventSubscriber<E> subscribe(Class<E> event) {
         var subscriber = new TestEventSubscriber<E>();
-        provider.registry().register(event, subscriber);
+        provider.registry.register(event, subscriber);
         return subscriber;
     }
 
     @Override
     public <E> boolean unsubscribe(EventSubscriber<E> subscriber) {
-        return provider.registry().unregister(subscriber);
+        return provider.registry.unregister(subscriber);
     }
 }

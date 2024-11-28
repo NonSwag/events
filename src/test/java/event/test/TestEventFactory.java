@@ -14,15 +14,10 @@ public class TestEventFactory implements EventFactory {
     }
 
     @Override
-    public <E> CompletableFuture<E> notify(E event) {
-        return notify(event, Runnable::run);
-    }
-
-    @Override
     @SuppressWarnings("unchecked")
     public <E> CompletableFuture<E> notify(E event, Executor executor) {
         return CompletableFuture.supplyAsync(() -> {
-            provider.registry().subscriptions((Class<E>) event.getClass())
+            provider.registry.subscriptions((Class<E>) event.getClass())
                     .sorted(Comparator.comparingInt(TestEventSubscriber::priority))
                     .forEach(subscriber -> subscriber.handle(event));
             return event;
@@ -30,15 +25,10 @@ public class TestEventFactory implements EventFactory {
     }
 
     @Override
-    public <E> CompletableFuture<E> push(E event) {
-        return push(event, Runnable::run);
-    }
-
-    @Override
     @SuppressWarnings("unchecked")
-    public <E> CompletableFuture<E> push(E event, Executor executor) {
+    public <E> CompletableFuture<E> fire(E event, Executor executor) {
         return CompletableFuture.supplyAsync(() -> {
-            provider.registry().subscriptions((Class<E>) event.getClass())
+            provider.registry.subscriptions((Class<E>) event.getClass())
                     .sorted(Comparator.comparingInt(TestEventSubscriber::priority))
                     .map(subscriber -> subscriber.handle(event))
                     .forEach(CompletableFuture::join);
